@@ -1,0 +1,22 @@
+# SignalTrail dependencies
+# Verified against Python 3.14.5 on Windows.
+#
+# Lower bounds are the first versions that ship cp314 wheels; no upper bounds
+# are pinned because nothing here depends on version-specific behaviour.
+
+# Core: data handling and the local analytical store.
+pandas>=3.0.0
+duckdb>=1.4.0
+
+# Dashboard.
+streamlit>=1.50.0
+plotly>=6.0.0
+
+# Optional: behavioural anomaly detection. Everything else works without it.
+scikit-learn>=1.7.0
+
+# Tests.
+pytest>=8.0.0
+
+# The local AI investigator talks to Ollama over HTTP using the standard
+# library, so it needs no package here - and no API key anywhere.

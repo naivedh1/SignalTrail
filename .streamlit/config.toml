@@ -1,0 +1,21 @@
+# Streamlit settings for SignalTrail.
+#
+# SignalTrail is a local-first tool for looking at security telemetry, so the
+# two defaults that matter here are the ones that would send something off the
+# machine or expose the page beyond it.
+
+[browser]
+# Streamlit reports anonymous usage statistics by default. A tool whose whole
+# premise is that the data stays on the machine should not be phoning home
+# about its own use either.
+gatherUsageStats = false
+
+[server]
+# Bind to loopback rather than every interface. Without this the dashboard is
+# reachable from the local network, and there is no authentication in front of
+# it. Change this only if you deliberately want someone else to reach it.
+address = "localhost"
+
+# The dashboard only reads the database; nothing is uploaded through it.
+enableXsrfProtection = true
+maxUploadSize = 1
