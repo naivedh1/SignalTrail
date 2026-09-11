@@ -19,3 +19,67 @@ address = "localhost"
 # The dashboard only reads the database; nothing is uploaded through it.
 enableXsrfProtection = true
 maxUploadSize = 1
+
+# --------------------------------------------------------------------------
+# Appearance
+# --------------------------------------------------------------------------
+#
+# These colours are the same ones src/ui.py defines in PALETTE. They are set
+# here as well because Streamlit's own widgets - dataframes, selects, buttons,
+# expanders - are themed from this file rather than from CSS, and a console
+# whose tables do not match its panels looks unfinished. tests/test_dashboard.py
+# asserts that the two definitions stay in step, so change them together.
+
+[theme]
+base = "dark"
+backgroundColor = "#0e1116"          # page background
+secondaryBackgroundColor = "#151a21" # panels, table headers, code blocks
+textColor = "#e6e9ee"
+primaryColor = "#5b8fc9"
+borderColor = "#262d38"
+linkColor = "#8fb7e2"
+linkUnderline = false
+
+# Square-ish corners and visible widget borders read as an instrument panel
+# rather than a consumer app.
+baseRadius = "3px"
+buttonRadius = "3px"
+showWidgetBorder = true
+showSidebarBorder = true
+
+# A slightly smaller root size fits more evidence on a 1366x768 screen without
+# dropping below comfortable reading size.
+baseFontSize = 15
+font = "ui-sans-serif, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif"
+codeFont = "ui-monospace, Cascadia Mono, Consolas, SF Mono, Menlo, monospace"
+
+# Headings are used as structure, not as display type, so they are scaled down
+# from Streamlit's defaults.
+headingFontSizes = ["1.5rem", "1.2rem", "1.02rem", "0.92rem", "0.84rem", "0.78rem"]
+
+dataframeHeaderBackgroundColor = "#171d25"
+dataframeBorderColor = "#262d38"
+
+# Streamlit's notices (st.warning, st.error, st.info, st.success) default to
+# saturated blocks that would be the loudest thing on a page whose whole point
+# is that severity is the only colour carrying weight. These are the same hues
+# as the severity palette, at panel brightness.
+yellowBackgroundColor = "#241f14"
+yellowTextColor = "#e6c07a"
+redBackgroundColor = "#251616"
+redTextColor = "#e77373"
+greenBackgroundColor = "#16241c"
+greenTextColor = "#7fc79a"
+blueBackgroundColor = "#161d27"
+blueTextColor = "#8fb7e2"
+grayBackgroundColor = "#1b212b"
+grayTextColor = "#aeb7c2"
+
+# Applied to any chart that does not name its own colours. Severity charts
+# always pass the severity palette explicitly.
+chartCategoricalColors = ["#5b8fc9", "#d9a441", "#d1663a", "#7f8c9b", "#4f9d69", "#b23b3b"]
+
+[theme.sidebar]
+backgroundColor = "#11151b"
+secondaryBackgroundColor = "#1b212b"
+borderColor = "#262d38"
