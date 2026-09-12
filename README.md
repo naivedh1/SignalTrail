@@ -84,7 +84,7 @@ Full detail in [docs/architecture.md](docs/architecture.md).
 - **Streamlit dashboard** with six analyst-oriented tabs
 - **Optional anomaly detection** (Isolation Forest), clearly labelled as a supporting signal
 - **Optional local AI investigator** with a deterministic fallback
-- **164 tests**, no external services required
+- **219 tests**, no external services required
 
 ---
 
@@ -464,8 +464,9 @@ run over unchanged input produces an identical database.
 python -m pytest
 ```
 
-164 tests. No external services, no network access, no generated dataset
-required — fixtures are small and hand-written.
+219 tests. No external services, no network access, no generated dataset
+required — fixtures are small and hand-written, and the dashboard tests
+stub the local model so a running Ollama cannot change the result.
 
 ## Running the dashboard
 
