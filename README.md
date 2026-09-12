@@ -61,8 +61,8 @@ reaches an analyst is a story rather than a list.
          |                     |
          +----------+----------+
                     |
-              dashboard.py  ......  Streamlit
-                    |
+              dashboard.py  ......  Streamlit page composition
+                    |             ui.py  ....  palette, stylesheet, charts
             ai_investigator.py  ..  optional local model + fallback
 ```
 
@@ -303,19 +303,30 @@ and SignalTrail will detect it. Override with `SIGNALTRAIL_OLLAMA_MODEL` and
 
 ## Dashboard
 
-Six tabs, ordered by the questions an analyst actually asks.
+Six sections, reached from a persistent left rail and ordered by the questions
+an analyst actually asks.
 
-| Tab | Answers |
+| Section | Answers |
 | --- | --- |
-| **Overview** | What happened? Events, hosts, users, alerts, incidents; volume over time, events by type, alerts by severity and host. |
+| **Overview** | What happened? Six headline counters, event volume over time, the severity split, the latest detections, top hosts and indicators, and a snapshot of every correlated incident. |
 | **Detection** | Why was it flagged? Filterable alerts, rule logic, possible technique, benign causes to rule out, and the evidence. |
-| **Investigation** | What is the story? Incident summary, timeline, related alerts, indicators, evidence records, and a widenable window. |
-| **Threat Hunting** | What else is out there? Free-text indicator search and field filters. |
-| **AI Investigation** | Help me write it up. Local model if available, deterministic summary otherwise. |
-| **Anomalies** | Where should I look when nothing fired? Ranked behaviour windows. |
+| **Investigation** | What is the story? Incident header, observed attack sequence, a marked timeline, related alerts, indicators, evidence records, and a widenable window. |
+| **Threat Hunting** | What else is out there? Free-text indicator search and field filters, with the result cap always stated. |
+| **AI Investigation** | Help me write it up. Local model if available, deterministic summary otherwise, rendered section by section. |
+| **Anomalies** | Where should I look when nothing fired? Ranked behaviour windows, presented as a ranking rather than a verdict. |
 
-Evidence is never more than one click away — every alert and incident expands
-to the underlying records, including the original raw message.
+One section renders per run, which is what keeps the page quick with a
+thousand events loaded.
+
+Evidence is never more than one click away — every alert and incident
+expands to the underlying records, including the original raw message.
+Severity is never carried by colour alone: every badge, axis label and table
+cell keeps the word.
+
+Appearance lives in `src/ui.py` — one palette, one stylesheet, one chart
+theme — and the same palette is mirrored into `.streamlit/config.toml`,
+so Streamlit's own widgets sit on the colours the custom panels use. A test
+asserts the two definitions stay in step.
 
 ---
 
@@ -342,8 +353,9 @@ SignalTrail/
 │   ├── analytics.py            chart aggregations
 │   ├── anomaly.py              optional Isolation Forest
 │   ├── ai_investigator.py      optional local AI + deterministic fallback
-│   └── dashboard.py            Streamlit UI
-├── tests/                      164 pytest tests
+│   ├── dashboard.py            Streamlit UI (page composition)
+│   └── ui.py                   the console's visual system
+├── tests/                      219 pytest tests
 ├── docs/
 │   ├── architecture.md
 │   ├── detection-rules.md
